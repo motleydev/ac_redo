@@ -703,6 +703,11 @@ export type GetTweetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetTweetsQuery = { __typename?: 'query_root', app_user: Array<{ __typename?: 'app_user', username: string, tweets: Array<{ __typename?: 'tweet', content: string }> }> };
 
+export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsersQuery = { __typename?: 'query_root', app_user: Array<{ __typename?: 'app_user', username: string, id: any }> };
+
 
 export const GetTweetsDocument = `
     query GetTweets {
@@ -724,5 +729,25 @@ export const useGetTweetsQuery = <
     useQuery<GetTweetsQuery, TError, TData>(
       variables === undefined ? ['GetTweets'] : ['GetTweets', variables],
       fetcher<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, variables),
+      options
+    );
+export const GetUsersDocument = `
+    query GetUsers {
+  app_user {
+    username
+    id
+  }
+}
+    `;
+export const useGetUsersQuery = <
+      TData = GetUsersQuery,
+      TError = unknown
+    >(
+      variables?: GetUsersQueryVariables,
+      options?: UseQueryOptions<GetUsersQuery, TError, TData>
+    ) =>
+    useQuery<GetUsersQuery, TError, TData>(
+      variables === undefined ? ['GetUsers'] : ['GetUsers', variables],
+      fetcher<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, variables),
       options
     );
