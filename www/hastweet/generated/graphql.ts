@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import { RequestInit } from 'graphql-request/dist/types.dom';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -236,12 +236,20 @@ export type Mutation_Root = {
   delete_tweet?: Maybe<Tweet_Mutation_Response>;
   /** delete single row from the table: "tweet" */
   delete_tweet_by_pk?: Maybe<Tweet>;
+  /** delete data from the table: "tweet_like" */
+  delete_tweet_like?: Maybe<Tweet_Like_Mutation_Response>;
+  /** delete single row from the table: "tweet_like" */
+  delete_tweet_like_by_pk?: Maybe<Tweet_Like>;
   /** insert data into the table: "app_user" */
   insert_app_user?: Maybe<App_User_Mutation_Response>;
   /** insert a single row into the table: "app_user" */
   insert_app_user_one?: Maybe<App_User>;
   /** insert data into the table: "tweet" */
   insert_tweet?: Maybe<Tweet_Mutation_Response>;
+  /** insert data into the table: "tweet_like" */
+  insert_tweet_like?: Maybe<Tweet_Like_Mutation_Response>;
+  /** insert a single row into the table: "tweet_like" */
+  insert_tweet_like_one?: Maybe<Tweet_Like>;
   /** insert a single row into the table: "tweet" */
   insert_tweet_one?: Maybe<Tweet>;
   /** update data of the table: "app_user" */
@@ -252,6 +260,10 @@ export type Mutation_Root = {
   update_tweet?: Maybe<Tweet_Mutation_Response>;
   /** update single row of the table: "tweet" */
   update_tweet_by_pk?: Maybe<Tweet>;
+  /** update data of the table: "tweet_like" */
+  update_tweet_like?: Maybe<Tweet_Like_Mutation_Response>;
+  /** update single row of the table: "tweet_like" */
+  update_tweet_like_by_pk?: Maybe<Tweet_Like>;
 };
 
 
@@ -280,6 +292,18 @@ export type Mutation_RootDelete_Tweet_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Tweet_LikeArgs = {
+  where: Tweet_Like_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Tweet_Like_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_App_UserArgs = {
   objects: Array<App_User_Insert_Input>;
   on_conflict?: InputMaybe<App_User_On_Conflict>;
@@ -297,6 +321,20 @@ export type Mutation_RootInsert_App_User_OneArgs = {
 export type Mutation_RootInsert_TweetArgs = {
   objects: Array<Tweet_Insert_Input>;
   on_conflict?: InputMaybe<Tweet_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tweet_LikeArgs = {
+  objects: Array<Tweet_Like_Insert_Input>;
+  on_conflict?: InputMaybe<Tweet_Like_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tweet_Like_OneArgs = {
+  object: Tweet_Like_Insert_Input;
+  on_conflict?: InputMaybe<Tweet_Like_On_Conflict>;
 };
 
 
@@ -334,6 +372,20 @@ export type Mutation_RootUpdate_Tweet_By_PkArgs = {
   pk_columns: Tweet_Pk_Columns_Input;
 };
 
+
+/** mutation root */
+export type Mutation_RootUpdate_Tweet_LikeArgs = {
+  _set?: InputMaybe<Tweet_Like_Set_Input>;
+  where: Tweet_Like_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tweet_Like_By_PkArgs = {
+  _set?: InputMaybe<Tweet_Like_Set_Input>;
+  pk_columns: Tweet_Like_Pk_Columns_Input;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -364,6 +416,12 @@ export type Query_Root = {
   tweet_aggregate: Tweet_Aggregate;
   /** fetch data from the table: "tweet" using primary key columns */
   tweet_by_pk?: Maybe<Tweet>;
+  /** fetch data from the table: "tweet_like" */
+  tweet_like: Array<Tweet_Like>;
+  /** fetch aggregated fields from the table: "tweet_like" */
+  tweet_like_aggregate: Tweet_Like_Aggregate;
+  /** fetch data from the table: "tweet_like" using primary key columns */
+  tweet_like_by_pk?: Maybe<Tweet_Like>;
 };
 
 
@@ -412,6 +470,29 @@ export type Query_RootTweet_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
+
+export type Query_RootTweet_LikeArgs = {
+  distinct_on?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tweet_Like_Order_By>>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
+};
+
+
+export type Query_RootTweet_Like_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tweet_Like_Order_By>>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
+};
+
+
+export type Query_RootTweet_Like_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "app_user" */
@@ -426,6 +507,12 @@ export type Subscription_Root = {
   tweet_aggregate: Tweet_Aggregate;
   /** fetch data from the table: "tweet" using primary key columns */
   tweet_by_pk?: Maybe<Tweet>;
+  /** fetch data from the table: "tweet_like" */
+  tweet_like: Array<Tweet_Like>;
+  /** fetch aggregated fields from the table: "tweet_like" */
+  tweet_like_aggregate: Tweet_Like_Aggregate;
+  /** fetch data from the table: "tweet_like" using primary key columns */
+  tweet_like_by_pk?: Maybe<Tweet_Like>;
 };
 
 
@@ -474,6 +561,29 @@ export type Subscription_RootTweet_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
+
+export type Subscription_RootTweet_LikeArgs = {
+  distinct_on?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tweet_Like_Order_By>>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
+};
+
+
+export type Subscription_RootTweet_Like_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tweet_Like_Order_By>>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
+};
+
+
+export type Subscription_RootTweet_Like_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']>;
@@ -493,10 +603,34 @@ export type Tweet = {
   content: Scalars['String'];
   created_at: Scalars['timestamptz'];
   id: Scalars['uuid'];
+  /** An array relationship */
+  likes: Array<Tweet_Like>;
+  /** An aggregate relationship */
+  likes_aggregate: Tweet_Like_Aggregate;
   updated_at: Scalars['timestamptz'];
   /** An object relationship */
   user?: Maybe<App_User>;
   user_id: Scalars['uuid'];
+};
+
+
+/** columns and relationships of "tweet" */
+export type TweetLikesArgs = {
+  distinct_on?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tweet_Like_Order_By>>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
+};
+
+
+/** columns and relationships of "tweet" */
+export type TweetLikes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tweet_Like_Order_By>>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
 };
 
 /** aggregated selection of "tweet" */
@@ -543,6 +677,7 @@ export type Tweet_Bool_Exp = {
   content?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  likes?: InputMaybe<Tweet_Like_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<App_User_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -561,10 +696,199 @@ export type Tweet_Insert_Input = {
   content?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
+  likes?: InputMaybe<Tweet_Like_Arr_Rel_Insert_Input>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<App_User_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
+
+/** columns and relationships of "tweet_like" */
+export type Tweet_Like = {
+  __typename?: 'tweet_like';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  /** An object relationship */
+  tweet?: Maybe<Tweet>;
+  tweet_id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user?: Maybe<App_User>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregated selection of "tweet_like" */
+export type Tweet_Like_Aggregate = {
+  __typename?: 'tweet_like_aggregate';
+  aggregate?: Maybe<Tweet_Like_Aggregate_Fields>;
+  nodes: Array<Tweet_Like>;
+};
+
+/** aggregate fields of "tweet_like" */
+export type Tweet_Like_Aggregate_Fields = {
+  __typename?: 'tweet_like_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Tweet_Like_Max_Fields>;
+  min?: Maybe<Tweet_Like_Min_Fields>;
+};
+
+
+/** aggregate fields of "tweet_like" */
+export type Tweet_Like_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Tweet_Like_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "tweet_like" */
+export type Tweet_Like_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Tweet_Like_Max_Order_By>;
+  min?: InputMaybe<Tweet_Like_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "tweet_like" */
+export type Tweet_Like_Arr_Rel_Insert_Input = {
+  data: Array<Tweet_Like_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Tweet_Like_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "tweet_like". All fields are combined with a logical 'AND'. */
+export type Tweet_Like_Bool_Exp = {
+  _and?: InputMaybe<Array<Tweet_Like_Bool_Exp>>;
+  _not?: InputMaybe<Tweet_Like_Bool_Exp>;
+  _or?: InputMaybe<Array<Tweet_Like_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  tweet?: InputMaybe<Tweet_Bool_Exp>;
+  tweet_id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<App_User_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "tweet_like" */
+export enum Tweet_Like_Constraint {
+  /** unique or primary key constraint */
+  TweetLikePkey = 'tweet_like_pkey'
+}
+
+/** input type for inserting data into table "tweet_like" */
+export type Tweet_Like_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  tweet?: InputMaybe<Tweet_Obj_Rel_Insert_Input>;
+  tweet_id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user?: InputMaybe<App_User_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Tweet_Like_Max_Fields = {
+  __typename?: 'tweet_like_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  tweet_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "tweet_like" */
+export type Tweet_Like_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  tweet_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Tweet_Like_Min_Fields = {
+  __typename?: 'tweet_like_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  tweet_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "tweet_like" */
+export type Tweet_Like_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  tweet_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "tweet_like" */
+export type Tweet_Like_Mutation_Response = {
+  __typename?: 'tweet_like_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Tweet_Like>;
+};
+
+/** on conflict condition type for table "tweet_like" */
+export type Tweet_Like_On_Conflict = {
+  constraint: Tweet_Like_Constraint;
+  update_columns?: Array<Tweet_Like_Update_Column>;
+  where?: InputMaybe<Tweet_Like_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "tweet_like". */
+export type Tweet_Like_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  tweet?: InputMaybe<Tweet_Order_By>;
+  tweet_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<App_User_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: tweet_like */
+export type Tweet_Like_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "tweet_like" */
+export enum Tweet_Like_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TweetId = 'tweet_id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "tweet_like" */
+export type Tweet_Like_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  tweet_id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "tweet_like" */
+export enum Tweet_Like_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TweetId = 'tweet_id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
 
 /** aggregate max on columns */
 export type Tweet_Max_Fields = {
@@ -613,6 +937,13 @@ export type Tweet_Mutation_Response = {
   returning: Array<Tweet>;
 };
 
+/** input type for inserting object relation for remote table "tweet" */
+export type Tweet_Obj_Rel_Insert_Input = {
+  data: Tweet_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Tweet_On_Conflict>;
+};
+
 /** on conflict condition type for table "tweet" */
 export type Tweet_On_Conflict = {
   constraint: Tweet_Constraint;
@@ -625,6 +956,7 @@ export type Tweet_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  likes_aggregate?: InputMaybe<Tweet_Like_Aggregate_Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<App_User_Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -688,12 +1020,19 @@ export type Uuid_Comparison_Exp = {
 export type GetTweetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTweetsQuery = { __typename?: 'query_root', app_user: Array<{ __typename?: 'app_user', username: string, tweets: Array<{ __typename?: 'tweet', content: string }> }> };
+export type GetTweetsQuery = { __typename?: 'query_root', app_user: Array<{ __typename?: 'app_user', username: string, tweets: Array<{ __typename?: 'tweet', id: any, content: string, likes_aggregate: { __typename?: 'tweet_like_aggregate', aggregate?: { __typename?: 'tweet_like_aggregate_fields', count: number } | null } }> }> };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUsersQuery = { __typename?: 'query_root', app_user: Array<{ __typename?: 'app_user', username: string }> };
+
+export type LikeTweetMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type LikeTweetMutation = { __typename?: 'mutation_root', insert_tweet_like_one?: { __typename?: 'tweet_like', tweet_id: any, tweet?: { __typename?: 'tweet', likes_aggregate: { __typename?: 'tweet_like_aggregate', aggregate?: { __typename?: 'tweet_like_aggregate_fields', count: number } | null } } | null } | null };
 
 
 export const GetTweetsDocument = `
@@ -701,7 +1040,13 @@ export const GetTweetsDocument = `
   app_user {
     username
     tweets {
+      id
       content
+      likes_aggregate {
+        aggregate {
+          count
+        }
+      }
     }
   }
 }
@@ -739,5 +1084,32 @@ export const useGetUsersQuery = <
     useQuery<GetUsersQuery, TError, TData>(
       variables === undefined ? ['GetUsers'] : ['GetUsers', variables],
       fetcher<GetUsersQuery, GetUsersQueryVariables>(client, GetUsersDocument, variables, headers),
+      options
+    );
+export const LikeTweetDocument = `
+    mutation LikeTweet($id: uuid!) {
+  insert_tweet_like_one(object: {tweet_id: $id}) {
+    tweet_id
+    tweet {
+      likes_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}
+    `;
+export const useLikeTweetMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<LikeTweetMutation, TError, LikeTweetMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<LikeTweetMutation, TError, LikeTweetMutationVariables, TContext>(
+      ['LikeTweet'],
+      (variables?: LikeTweetMutationVariables) => fetcher<LikeTweetMutation, LikeTweetMutationVariables>(client, LikeTweetDocument, variables, headers)(),
       options
     );

@@ -3,10 +3,19 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import client from "../lib/client";
 
-import { useGetTweetsQuery, useGetUsersQuery } from "../generated/graphql";
+import {
+  useGetTweetsQuery,
+  useGetUsersQuery,
+  useLikeTweetMutation,
+} from "../generated/graphql";
 
 const Home: NextPage = () => {
-  const { isSuccess, data } = useGetTweetsQuery(client, {});
+  const { isSuccess, data, refetch } = useGetTweetsQuery(client, {});
+  const { mutate } = useLikeTweetMutation(client, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
   const response = useGetUsersQuery(client, {});
 
   return (
@@ -25,7 +34,19 @@ const Home: NextPage = () => {
                 <p>{user.username}</p>
                 <ul>
                   {user.tweets.map((tweet, index) => {
-                    return <li key={index}>{tweet.content}</li>;
+                    return (
+                      <li key={index}>
+                        {tweet.content} {tweet.likes_aggregate.aggregate?.count}
+                        <button
+                          onClick={() => {
+                            mutate({ id: tweet.id });
+                          }}
+                        >
+                          {" "}
+                          Like
+                        </button>
+                      </li>
+                    );
                   })}
                 </ul>
               </div>

@@ -1,2 +1,3 @@
 - "!include public_app_user.yaml"
 - "!include public_tweet.yaml"
+- "!include public_tweet_like.yaml"

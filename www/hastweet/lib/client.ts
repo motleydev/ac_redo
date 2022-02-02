@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 
 const graphQLClient = new GraphQLClient(
-  "http://localhost:8080/v1/graphql"
+  process.env.NEXT_PUBLIC_GRAPHQL_SERVER as string
   // {
   //   headers: (() => {
   //     let cookie = Cookies.get("has_demo_token");

@@ -1,0 +1,12 @@
+mutation LikeTweet($id: uuid!) {
+  insert_tweet_like_one(object: { tweet_id: $id }) {
+    tweet_id
+    tweet {
+      likes_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}

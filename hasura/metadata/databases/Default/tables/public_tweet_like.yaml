@@ -1,7 +1,16 @@
 table:
-  name: tweet
+  name: tweet_like
   schema: public
 object_relationships:
+- name: tweet
+  using:
+    manual_configuration:
+      column_mapping:
+        tweet_id: id
+      insertion_order: null
+      remote_table:
+        name: tweet
+        schema: public
 - name: user
   using:
     manual_configuration:
@@ -11,21 +20,18 @@ object_relationships:
       remote_table:
         name: app_user
         schema: public
-array_relationships:
-- name: likes
-  using:
-    manual_configuration:
-      column_mapping:
-        id: tweet_id
-      insertion_order: null
-      remote_table:
-        name: tweet_like
-        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - tweet_id
+  role: anonymous
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
-    - content
-    - created_at
     - id
+    - tweet_id
     filter: {}
   role: anonymous

@@ -2,7 +2,13 @@ query GetTweets {
   app_user {
     username
     tweets {
+      id
       content
+      likes_aggregate {
+        aggregate {
+          count
+        }
+      }
     }
   }
 }
