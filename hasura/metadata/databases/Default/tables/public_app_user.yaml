@@ -11,3 +11,9 @@ array_relationships:
       remote_table:
         name: tweet
         schema: public
+select_permissions:
+- permission:
+    columns:
+    - username
+    filter: {}
+  role: anonymous

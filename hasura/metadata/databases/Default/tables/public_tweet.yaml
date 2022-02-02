@@ -11,3 +11,10 @@ object_relationships:
       remote_table:
         name: app_user
         schema: public
+select_permissions:
+- permission:
+    columns:
+    - content
+    - created_at
+    filter: {}
+  role: anonymous

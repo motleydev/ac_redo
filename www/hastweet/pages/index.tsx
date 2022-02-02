@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import client from "../lib/client";
 
 import { useGetTweetsQuery, useGetUsersQuery } from "../generated/graphql";
 
 const Home: NextPage = () => {
-  const { isSuccess, data } = useGetTweetsQuery();
-  const response = useGetUsersQuery();
+  const { isSuccess, data } = useGetTweetsQuery(client, {});
+  const response = useGetUsersQuery(client, {});
 
   return (
     <div className={styles.container}>

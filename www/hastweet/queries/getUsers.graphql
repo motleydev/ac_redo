@@ -1,6 +1,5 @@
 query GetUsers {
   app_user {
     username
-    id
   }
 }
